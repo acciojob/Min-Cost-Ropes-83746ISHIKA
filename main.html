@@ -1,16 +1,27 @@
-<!DOCTYPE html>
+function mincost(arr) {
+  // Use a min heap approach using sort
+  let totalCost = 0;
 
-<html>
+  // Keep combining until only one rope is left
+  while (arr.length > 1) {
+    // Sort to get two smallest ropes at front
+    arr.sort((a, b) => a - b);
 
-<head>
-	<link rel="stylesheet" href="styles.css">
-</head>
+    // Take out two smallest
+    let first = arr.shift();
+    let second = arr.shift();
 
-<body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
+    // Cost to combine them
+    let cost = first + second;
+    totalCost += cost;
 
-</body>
+    // Push the combined rope back
+    arr.push(cost);
+  }
 
-</html>
+  return totalCost;
+}
+
+// Test cases
+console.log(mincost([4, 3, 2, 6])); // 29
+console.log(mincost([1, 2, 3, 4, 5])); // 33
