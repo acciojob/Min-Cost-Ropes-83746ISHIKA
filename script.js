@@ -1,19 +1,24 @@
-function mincost(arr) {
+import heapq
 
-  let totalCost = 0;
-  while (arr.length > 1) {
+def mincost(arr):
+    if len(arr) <= 1:
+        return 0  # No cost if there's one or zero ropes
 
-    arr.sort((a, b) => a - b);
-    let first = arr.shift();
-    let second = arr.shift();
-    let cost = first + second;
-    totalCost += cost;
-    arr.push(cost);
-  }
-  return totalCost;
-}
+    # Convert the list into a min-heap
+    heapq.heapify(arr)
 
-console.log(mincost([4, 3, 2, 6]));    
-console.log(mincost([1, 2, 3, 4, 5]));  
-console.log(mincost([5, 5, 5, 5]));      
-console.log(mincost([10]));           \
+    total_cost = 0
+
+    while len(arr) > 1:
+        # Extract the two smallest ropes
+        first = heapq.heappop(arr)
+        second = heapq.heappop(arr)
+
+        # Connect them
+        cost = first + second
+        total_cost += cost
+
+        # Add the combined rope back to the heap
+        heapq.heappush(arr, cost)
+
+    return total_cost
